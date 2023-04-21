@@ -37,7 +37,7 @@ const Cart = () => {
         <div className='emptyCart'>
           <RemoveShoppingCartIcom />
           <Typography>No Product in Your Cart</Typography>
-          <Link to='/products'>View Products</Link>
+          <Link to='/'>View Products</Link>
         </div>
       ) : (
         <Fragment>

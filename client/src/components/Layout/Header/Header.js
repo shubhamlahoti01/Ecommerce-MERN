@@ -46,7 +46,7 @@ const Header = () => {
           <div className='hidden sm:block flex items-center w-1/5 justify-around sm:w-0.5/4 relative'>
             <img
               className='inline-block h-12 w-12 rounded-full ring-2 ring-white'
-              src={`${'/Profile.png'}`}
+              src={`${user?.avatar?.url || '/Profile.png'}`}
               alt='{user.handle}'
               onClick={() => setIsOpenMenu(!isOpenMenu)}
             />
@@ -55,13 +55,41 @@ const Header = () => {
               onMouseLeave={() => setIsOpenMenu(false)}
               className={`${
                 isOpenMenu ? 'block' : 'hidden'
-              } absolute border-2 border-black bg-white`}
+              } absolute border-2 border-black bg-white left-1`}
             >
               <ul>
-                <li>Login/Logout</li>
-                <li>Dashboard</li>
+                {isAuthenticated ? (
+                  <>
+                    {user?.role === 'admin' && (
+                      <li>
+                        <Link to='/admin/dashboard'>Dashboard</Link>
+                      </li>
+                    )}
+                    <li>
+                      <Link to='/profile'>Profile</Link>
+                    </li>
+                    <li className='border-blue-800 p-0.5 my-1'>
+                      <button
+                        onClick={() => {
+                          dispatch(logout());
+                          toast.success('Logout Successfull');
+                        }}
+                      >
+                        Logout
+                      </button>
+                    </li>
+                  </>
+                ) : (
+                  <>
+                    <li className='border-blue-800 p-0.5 my-1'>
+                      <Link to='/login'>Login</Link>
+                    </li>
+                  </>
+                )}
               </ul>
             </div>
+
+            {/* -------------- */}
           </div>
           {/* search */}
           <div className='flex justify-center w-3/5 sm:w-2.5/4'>

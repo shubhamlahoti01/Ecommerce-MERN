@@ -51,7 +51,7 @@ const Products = ({ categories = [] }) => {
         <Fragment>
           <MetaData title={'PRODUCTS -- ECOMMERCE'} />
           <div className='filterBox'>
-            <Typography>Price</Typography>
+            <Typography className='th'>Price</Typography>
             <Slider
               value={price}
               onChange={priceHandler}
@@ -60,10 +60,11 @@ const Products = ({ categories = [] }) => {
               min={0}
               max={25000}
             />
-            <Typography>Categories</Typography>
+            <Typography className='th'>Categories</Typography>
             <ul className='categoryBox'>
               {categories.map((category) => (
                 <li
+                  className='category-link'
                   key={category._id}
                   onClick={() => setCategory(category._id)}
                 >
@@ -72,7 +73,9 @@ const Products = ({ categories = [] }) => {
               ))}
             </ul>
             <fieldset>
-              <Typography component='legend'>Ratings Above</Typography>
+              <Typography component='legend' className='th'>
+                Ratings Above
+              </Typography>
               <Slider
                 value={ratings}
                 onChange={(e, newRating) => setRatings(newRating)}

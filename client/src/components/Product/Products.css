@@ -9,13 +9,38 @@
 }
 
 .products {
+  /* border: 2px solid red; */
   display: flex;
   flex-wrap: wrap;
   padding: 0 5vmax;
   justify-content: center;
   min-height: 30vh;
 }
-
+.productCard {
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  background-color: rgb(245, 245, 245);
+  border-radius: 20%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin: 1rem;
+}
+.productCard > img {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 3rem;
+  object-fit: contain;
+}
+.productCard > div {
+  height: 10%;
+  display: flex;
+  align-items: center;
+}
+.productCard > span {
+  height: 10%;
+}
 .paginationBox {
   display: flex;
   justify-content: center;
@@ -67,10 +92,19 @@
 }
 
 .filterBox {
-  width: 10vmax;
+  background-color: rgb(245, 245, 245);
+  padding: 1rem;
+  min-height: 60vh;
+  width: 20vw;
+  border-radius: 10%;
   position: absolute;
-  top: 10vmax;
+  top: 20vmax;
   left: 4vmax;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .categoryBox {
@@ -86,18 +120,22 @@
   transition: all 0.5s;
 }
 .category-link:hover {
-  color: tomato;
+  color: rgb(41, 31, 104);
 }
 
 .filterBox > fieldset {
   border: 1px solid rgba(0, 0, 0, 0.329);
 }
-
+.th {
+  font-weight: 900;
+  padding: 0.25rem 0.5rem 0.25rem 0.5rem;
+  border-radius: 10%;
+}
 @media screen and (max-width: 600px) {
   .filterBox {
-    width: 20vmax;
+    min-width: 40vw;
     position: static;
-    margin: auto;
+    margin: 2rem auto 2rem auto;
   }
 
   .page-link {

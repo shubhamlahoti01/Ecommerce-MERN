@@ -52,7 +52,7 @@ const App = () => {
     // getStripeApiKey();
   }, []);
   return (
-    <div>
+    <div className='App'>
       <Router>
         <Header />
         <Routes>
