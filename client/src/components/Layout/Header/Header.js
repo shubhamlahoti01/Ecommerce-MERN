@@ -7,6 +7,7 @@ import { toast } from 'react-hot-toast';
 import Loader from '../Loader';
 
 const Header = () => {
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { error, loading, isAuthenticated, user } = useSelector(
@@ -94,7 +95,7 @@ const Header = () => {
             {/* cart */}
             <Link to='/cart' className='relative'>
               <span className='absolute text-white text-sm bg-red-700 rounded-lg px-1 right-0.5 -top-1.5 font-semibold'>
-                5
+                {cartItems ? cartItems.length : 0}
               </span>
               <HiShoppingCart size={38} color='grey' />
             </Link>

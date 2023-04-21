@@ -11,7 +11,8 @@ import { Slider } from '@mui/material';
 import { Typography } from '@mui/material';
 import MetaData from '../Layout/MetaData';
 
-const Products = ({ match, categories = [] }) => {
+const Products = ({ categories = [] }) => {
+  const params = useParams();
   const dispatch = useDispatch();
   const { keyword = '' } = useParams();
   const [currentPage, setCurrentPage] = useState(1);

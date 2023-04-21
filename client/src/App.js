@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Header from './components/Layout/Header/Header';
 import Footer from './components/Layout/Footer/Footer';
@@ -21,20 +21,48 @@ import OrderList from './components/Admin/OrderList';
 import UpdateProduct from './components/Admin/UpdateProduct';
 import Shipping from './components/Cart/Shipping';
 import MyOrders from './components/Orders/MyOrders';
+import OrderSuccess from './components/Cart/OrderSuccess';
+import OrderDetails from './components/Orders/OrderDetails';
+import ConfirmOrder from './components/Orders/ConfirmOrder';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+import store from './store';
+import Payment from './components/Cart/Payment';
+import NotFound from './components/Layout/NotFound/NotFound';
+import ProcessOrder from './components/Admin/ProcessOrder';
+import UsersList from './components/Admin/UsersList';
+import UpdateUser from './components/Admin/UpdateUser';
+import ProductReviews from './components/Admin/ProductReviews';
 
 const App = () => {
-  const dispatch = useDispatch();
   const { isAuthenticated, user = {} } = useSelector((state) => state.user);
+  /* 
+  const [stripeApiKey, setStripeApiKey] = useState('');
+  async function getStripeApiKey() {
+    const { data } = await axios.get('/api/v1/stripeapikey');
+    setStripeApiKey(data.stripeApiKey);
+    // console.log(stripeApiKey);
+    // loadStripe(stripeApiKey);
+  }
+  */
 
   useEffect(() => {
-    dispatch(loadUser());
-  }, [dispatch]);
+    store.dispatch(loadUser());
+    // getStripeApiKey();
+  }, []);
   return (
     <div>
       <Router>
         <Header />
-
         <Routes>
+          <Route
+            path='/process/payment'
+            element={<ProtectedRoute></ProtectedRoute>}
+          >
+            <Route path='' element={<Payment />} />
+          </Route>
+          {/* )} */}
           <Route path='/' element={<Home />} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
@@ -46,18 +74,16 @@ const App = () => {
           <Route path='/shipping' element={<ProtectedRoute />}>
             <Route path='' element={<Shipping />} />
           </Route>
+          <Route path='/success' element={<ProtectedRoute />}>
+            <Route path='' element={<OrderSuccess />} />
+          </Route>
           <Route path='/orders' element={<ProtectedRoute />}>
             <Route path='' element={<MyOrders />} />
           </Route>
-          {/* <ProtectedRoute exact path='/shipping' component={Shipping} /> */}
-          {/* <ProtectedRoute exact path='/success' component={OrderSuccess} /> */}
-          {/* <ProtectedRoute exact path='/orders' component={MyOrders} /> */}
-          {/* <ProtectedRoute
-            exact
-            path='/order/confirm'
-            component={ConfirmOrder}
-          /> */}
-          {/* <ProtectedRoute exact path='/order/:id' component={OrderDetails} /> */}
+          <Route path='/order' element={<ProtectedRoute />}>
+            <Route path='confirm' element={<ConfirmOrder />} />
+            <Route path=':id' element={<OrderDetails />} />
+          </Route>
 
           <Route path='/me/update' element={<ProtectedRoute />}>
             <Route path='' element={<UpdateProfile />} />
@@ -72,41 +98,21 @@ const App = () => {
             <Route path='product' element={<NewProduct />} />
             <Route path='product/:id' element={<UpdateProduct />} />
             <Route path='orders' element={<OrderList />} />
+            <Route path='order/:id' element={<ProcessOrder />} />
+            <Route path='users' element={<UsersList />} />
+            <Route path='user/:id' element={<UpdateUser />} />
+            <Route path='reviews' element={<ProductReviews />} />
           </Route>
 
-          {/*  */}
-          {/* 
-
-          <ProtectedRoute
-            exact
-            path='/admin/order/:id'
-            isAdmin={true}
-            component={ProcessOrder}
+          <Route
+            element={
+              window.location.pathname === '/process/payment' ? null : (
+                <NotFound />
+              )
+            }
           />
-          <ProtectedRoute
-            exact
-            path='/admin/users'
-            isAdmin={true}
-            component={UsersList}
-          />
-
-          <ProtectedRoute
-            exact
-            path='/admin/user/:id'
-            isAdmin={true}
-            component={UpdateUser}
-          />
-
-          <ProtectedRoute
-            exact
-            path='/admin/reviews'
-            isAdmin={true}
-            component={ProductReviews}
-          /> */}
         </Routes>
-        <button>
-          <Link to='/shipping'>Shipping</Link>
-        </button>
+
         <Footer />
         <Toaster />
       </Router>

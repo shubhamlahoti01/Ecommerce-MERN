@@ -35,7 +35,7 @@ const OrderList = () => {
       dispatch(clearErrors());
     }
     if (isDeleted) {
-      alert.success('Order Deleted Successfully');
+      toast.success('Order Deleted Successfully');
       navigate('/admin/orders');
       dispatch({ type: DELETE_ORDER_RESET });
     }

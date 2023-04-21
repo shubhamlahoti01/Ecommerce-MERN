@@ -196,7 +196,6 @@ exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
 
 // update User Profile
 exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
-  console.log('req');
   const newUserData = {
     name: req.body.name,
     email: req.body.email,
@@ -278,6 +277,7 @@ exports.updateUserRole = catchAsyncErrors(async (req, res, next) => {
 });
 
 // Delete User --Admin
+
 exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
   const user = await User.findById(req.params.id);
 
@@ -291,7 +291,7 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
   await cloudinary.v2.uploader.destroy(imageId);
 
-  await user.remove();
+  await user.deleteOne();
 
   res.status(200).json({
     success: true,

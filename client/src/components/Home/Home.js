@@ -28,7 +28,7 @@ const CategoryCard = ({ imageUrl, imageAlt, title, message, categoryid }) => {
 
 const Home = () => {
   const dispatch = useDispatch();
-  const [showProducts, setShowProducts] = useState(false);
+  const [showProducts, setShowProducts] = useState(true);
   const { loading, categories, error } = useSelector((state) => state.category);
 
   useEffect(() => {
@@ -51,12 +51,12 @@ const Home = () => {
             />
           </div>
           <div className='home-menu'>
-            <h1
+            {/* <h1
               onClick={() => setShowProducts(false)}
               className={showProducts ? '' : 'show-me'}
             >
               CATEGORIES
-            </h1>
+            </h1> */}
             <h1
               onClick={() => setShowProducts(true)}
               className={showProducts ? 'show-me' : ''}
