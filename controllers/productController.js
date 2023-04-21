@@ -8,11 +8,11 @@ const CategoryModel = require('../models/CategoryModel');
 // create product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   let images = [];
-  // if (typeof req.body.images === 'string') {
-  //   images.push(req.body.images);
-  // } else {
-  //   images = req.body.images;
-  // }
+  if (typeof req.body.images === 'string') {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
   const imagesLinks = [];
   for (let i = 0; i < images.length; i++) {
     const result = await cloudinary.v2.uploader.upload(images[i], {
@@ -27,7 +27,7 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
   req.body.images = imagesLinks;
   req.body.user = req.user.id;
   req.body.category = await CategoryModel.findOne({
-    slug: req.body.categoryslug,
+    slug: req.body.category,
   });
   const product = await Product.create(req.body);
   return res.status(201).json({
@@ -50,7 +50,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
   apiFeature.pagination(resultPerPage);
 
-  products = await apiFeature.query;
+  // products = await apiFeature.query;
 
   return res.status(200).json({
     success: true,
@@ -120,7 +120,10 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
 
     req.body.images = imagesLinks;
   }
-
+  req.body.category = await CategoryModel.findOne({
+    slug: req.body.category,
+  });
+  // console.log(req.body);
   product = await Product.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,

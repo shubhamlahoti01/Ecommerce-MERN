@@ -2,6 +2,7 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middleware/catchAsyncErrors');
 const slugify = require('slugify');
 const CategoryModel = require('../models/CategoryModel');
+const Product = require('../models/ProductModel');
 
 exports.createCategory = catchAsyncErrors(async (req, res, next) => {
   const { name } = req.body;
@@ -43,8 +44,8 @@ exports.getAllCategories = catchAsyncErrors(async (req, res, next) => {
 });
 
 exports.getSingleCategory = catchAsyncErrors(async (req, res, next) => {
-  const category = await CategoryModel.findOne({ slug: req.params.slug });
-  if (!category) {
+  const products = await Product.find({ category: req.params.id });
+  if (!products) {
     return next(
       new ErrorHandler('Error While getting category with this slug', 400)
     );
@@ -52,7 +53,7 @@ exports.getSingleCategory = catchAsyncErrors(async (req, res, next) => {
   return res.status(200).json({
     success: true,
     message: 'Single Category Fetched Successfully',
-    category,
+    products,
   });
 });
 

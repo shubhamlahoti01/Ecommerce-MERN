@@ -23,7 +23,7 @@ router
 router.route('/get-all-category').get(getAllCategories);
 
 // get single category
-router.route('/single-category/:slug').get(getSingleCategory);
+router.route('/single-category-products/:id').get(getSingleCategory);
 
 // delete category
 router

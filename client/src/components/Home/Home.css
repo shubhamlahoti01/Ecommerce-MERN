@@ -1,0 +1,33 @@
+.home-main {
+  display: flex;
+  flex-direction: column;
+}
+.banner-container {
+  width: 100%;
+}
+.banner-container > img {
+  object-fit: contain;
+}
+.home-menu {
+  display: flex;
+  width: 60%;
+  justify-content: space-evenly;
+  margin: auto;
+  padding: 1rem 0 1rem 0;
+}
+.home-menu > h1 {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.home-menu > h1:hover {
+  transform: scale(1.3);
+}
+.show-me {
+  border-bottom: 3px solid rgb(49, 49, 98);
+}
+.home-content {
+  border: 2px solid red;
+  min-height: 50vh;
+  /* display: flex; */
+}
