@@ -3,11 +3,15 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
 
 const ProtectedRoute = ({ isAdmin = false }) => {
-  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
+  const {
+    loading,
+    isAuthenticated,
+    user = {},
+  } = useSelector((state) => state.user);
   if (isAdmin) {
     return (
       <Fragment>
-        {loading === false && user.role === 'admin' ? (
+        {loading === false && user?.role === 'admin' ? (
           <Outlet />
         ) : (
           <Navigate to='/login' />
